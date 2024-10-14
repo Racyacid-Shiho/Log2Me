@@ -1,0 +1,14 @@
+{
+  "log2me.exception.wanna_set_global_level_to_global": "你在赣神魔？！你不能将全局日志级别设为“全局日志级别”！",
+  "log2me.exception.unknown_log_level": "未知的日志级别！",
+  "log2me.logging.start.send_to_target_players": "开始向%s个指定玩家发送日志：%s",
+  "log2me.logging.stop.send_to_target_players": "停止向%s个指定玩家发送日志：%s",
+  "log2me.logging.level.set_global_level": "全局日志级别已设为：%s",
+  "log2me.logging.level.set_private_level": "已将%s个玩家的日志级别设为%s：%s",
+  "log2me.logging.level.set_private_to_global": "已将%s个玩家的日志级别设为全局日志级别(%s)：%s",
+  "log2me.logging.players.global": "正在以全局日志级别(%s)接收日志的玩家：%s",
+  "log2me.logging.players.private": "以独立日志级别接收日志的玩家：",
+  "log2me.logging.players.private.getting": "-正在获取日志的玩家:%s",
+  "log2me.logging.players.private.not_getting": "-没在获取日志的玩家:%s",
+  "log2me.logging.players.private.remove": "已将%s个玩家从独立日志级别组移除：%s"
+}
