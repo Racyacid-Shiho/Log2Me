@@ -1,0 +1,14 @@
+{
+  "log2me.exception.wanna_set_global_level_to_global": "What are you doing?! You can't set global log level to GLOBAL!",
+  "log2me.exception.unknown_log_level": "Unknown Log Level!",
+  "log2me.logging.start.send_to_target_players": "Start to send logs to %s target player(s): %s",
+  "log2me.logging.stop.send_to_target_players": "Stop to send logs to %s target player(s): %s",
+  "log2me.logging.level.set_global_level": "The global log level sets to %s",
+  "log2me.logging.level.set_private_level": "Set %s players' log level to %s: %s",
+  "log2me.logging.level.set_private_to_global": "Set %s players' log level to GLOBAL(%s): %s",
+  "log2me.logging.players.global": "Getting logs with global log(%s) level's player(s): %s",
+  "log2me.logging.players.private": "Private log level players:",
+  "log2me.logging.players.private.getting": "- Getting player(s):%s",
+  "log2me.logging.players.private.not_getting": "- Not getting player(s):%s",
+  "log2me.logging.players.private.remove": "Removed %s player(s) from Private: %s"
+}

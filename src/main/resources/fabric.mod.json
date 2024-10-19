@@ -1,0 +1,30 @@
+{
+	"schemaVersion": 1,
+	"id": "log2me",
+	"version": "${version}",
+	"name": "Log2Me",
+	"description": "A simple fabric mod that can let you watch logs on chat bar.",
+	"authors": [
+		"Racyacid"
+	],
+	"contact": {
+		"sources": "https://github.com/Racyacid-Shiho/Log2Me"
+	},
+	"license": "MIT",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"cn.racyacid.log2me.Log2Me",
+			"cn.racyacid.log2me.command.LoggingCommand"
+		]
+	},
+	"mixins": [
+		"log2me.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.11",
+		"minecraft": ">=1.20.5",
+		"java": ">=21",
+		"fabric": "*"
+	}
+}
