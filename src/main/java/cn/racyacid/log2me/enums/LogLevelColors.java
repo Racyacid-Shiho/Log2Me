@@ -1,6 +1,9 @@
 package cn.racyacid.log2me.enums;
 
+import cn.racyacid.log2me.helper.LogLevelColorsConfigHelper;
 import org.apache.logging.log4j.Level;
+
+import java.util.Map;
 
 public enum LogLevelColors {
     /** Gray */
@@ -33,15 +36,13 @@ public enum LogLevelColors {
         this.color = color;
     }
 
-    public static int getLogLevelColor(Level level) {
-        if (level == Level.OFF)   return OFF.color;
-        if (level == Level.FATAL) return FATAL.color;
-        if (level == Level.ERROR) return ERROR.color;
-        if (level == Level.WARN)  return WARN.color;
-        if (level == Level.INFO)  return INFO.color;
-        if (level == Level.DEBUG) return DEBUG.color;
-        if (level == Level.TRACE) return TRACE.color;
-        if (level == Level.ALL)   return ALL.color;
-        throw new IllegalArgumentException("Unknown log level: " + level.toString());
+    private static final Map<String, Integer> LOG_LEVEL_COLOR_MAP;
+
+    public static int getConfigLogLevelColor(Level level) {
+        return LOG_LEVEL_COLOR_MAP.get(level.toString());
+    }
+
+    static {
+        LOG_LEVEL_COLOR_MAP = LogLevelColorsConfigHelper.readConfig();
     }
 }

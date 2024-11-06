@@ -58,6 +58,6 @@ public class TextUtils {
     }
 
     public static Text getStyledLogLevel(@NotNull Level level) {
-        return Text.literal(level.toString()).setStyle(Style.EMPTY.withItalic(true).withColor(LogLevelColors.getLogLevelColor(level)));
+        return Text.literal(level.toString()).setStyle(Style.EMPTY.withItalic(true).withColor(LogLevelColors.getConfigLogLevelColor(level)));
     }
 }

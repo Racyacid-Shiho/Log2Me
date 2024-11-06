@@ -62,6 +62,6 @@ public class ChatAppender extends AbstractAppender {
                DATE_FORMATTER.format(event.getTimeMillis()),
                level.toString(),
                event.getMessage().getFormattedMessage()) + LOG_IDENTIFIER)
-                .withColor(LogLevelColors.getLogLevelColor(level));
+                .withColor(LogLevelColors.getConfigLogLevelColor(level));
     }
 }

@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Level;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 import static cn.racyacid.log2me.logging.appender.ChatAppender.*;
 import static net.minecraft.command.argument.EntityArgumentType.getPlayers;
@@ -30,17 +31,27 @@ public class LoggingCommand implements ModInitializer {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
                 dispatcher.register(literal("log2me").requires(source -> source.hasPermissionLevel(4))
                         .then(literal("start").then(argument("player", players()).executes(context -> {
-                            ArrayList<String> playerNames = startLog2Players(getPlayers(context, "player"));
+                            List<String> playerNames = startLog2Players(getPlayers(context, "player"));
 
                             ServerCommandSource source = context.getSource();
-                            source.sendFeedback(() -> Text.translatable("log2me.logging.start.send_to_target_players", playerNames.size(), StringUtils.join(playerNames)), true);
+                            source.sendFeedback(() -> Text.translatable(
+                                    "log2me.logging.start.send_to_target_players",
+                                    playerNames.size(),
+                                    StringUtils.join(playerNames)),
+                                    true
+                            );
 
                             return 1;
                         }))).then(literal("stop").then(argument("player", players()).executes(context -> {
-                            ArrayList<String> playerNames = stopLog2Players(getPlayers(context, "player"));
+                            List<String> playerNames = stopLog2Players(getPlayers(context, "player"));
 
                             ServerCommandSource source = context.getSource();
-                            source.sendFeedback(() -> Text.translatable("log2me.logging.stop.send_to_target_players", playerNames.size(), StringUtils.join(playerNames)), true);
+                            source.sendFeedback(() -> Text.translatable(
+                                    "log2me.logging.stop.send_to_target_players",
+                                    playerNames.size(),
+                                    StringUtils.join(playerNames)),
+                                    true
+                            );
 
                             return 1;
                         }))).then(literal("setGlobalLevel").then(argument("level", StringArgumentType.word()).suggests(CommandHelper.LOG_LEVEL_SUGGESTIONS).executes(context -> {
@@ -52,7 +63,11 @@ public class LoggingCommand implements ModInitializer {
 
                             globalLogLevel = level;
 
-                            context.getSource().sendFeedback(() -> Text.translatable("log2me.logging.level.set_global_level", TextUtils.getStyledLogLevel(level)), true);
+                            context.getSource().sendFeedback(() -> Text.translatable(
+                                    "log2me.logging.level.set_global_level",
+                                    TextUtils.getStyledLogLevel(level)),
+                                    true
+                            );
 
                             return 1;
                         }))).then(literal("toGlobal").then(argument("player", players()).executes(context -> {
@@ -60,13 +75,24 @@ public class LoggingCommand implements ModInitializer {
 
                             setPrivate2Global(players);
 
-                            context.getSource().sendFeedback(() -> Text.translatable("log2me.logging.level.set_private_to_global", players.size(), TextUtils.getStyledLogLevel(globalLogLevel), TextUtils.getStringNames(players)), true);
+                            context.getSource().sendFeedback(() -> Text.translatable(
+                                    "log2me.logging.level.set_private_to_global",
+                                    players.size(),
+                                    TextUtils.getStyledLogLevel(globalLogLevel),
+                                    TextUtils.getStringNames(players)),
+                                    true
+                            );
 
                             return 1;
                         }))).then(literal("removePrivate").then(argument("player", players()).executes(context -> {
-                            ArrayList<String> playerNames = removeFromPrivate(getPlayers(context, "player"));
+                            List<String> playerNames = removeFromPrivate(getPlayers(context, "player"));
 
-                            context.getSource().sendFeedback(() -> Text.translatable("log2me.logging.players.private.remove", playerNames.size(), StringUtils.join(playerNames)), true);
+                            context.getSource().sendFeedback(() -> Text.translatable(
+                                    "log2me.logging.players.private.remove",
+                                    playerNames.size(),
+                                    StringUtils.join(playerNames)),
+                                    true
+                            );
 
                             return 1;
                         }))).then(literal("setPrivateLevel").then(argument("player", players()).then(argument("level", StringArgumentType.word()).suggests(CommandHelper.LOG_LEVEL_SUGGESTIONS).executes(context -> {
@@ -80,7 +106,13 @@ public class LoggingCommand implements ModInitializer {
 
                             add2PrivateOrChange(players, level, false);
 
-                            context.getSource().sendFeedback(() -> Text.translatable("log2me.logging.level.set_private_level", players.size(), TextUtils.getStyledLogLevel(level), TextUtils.getStringNames(players)), true);
+                            context.getSource().sendFeedback(() -> Text.translatable(
+                                    "log2me.logging.level.set_private_level",
+                                    players.size(),
+                                    TextUtils.getStyledLogLevel(level),
+                                    TextUtils.getStringNames(players)),
+                                    true
+                            );
 
                             return 1;
                         }).then(argument("startLogging", BoolArgumentType.bool()).executes(context -> {
@@ -94,7 +126,13 @@ public class LoggingCommand implements ModInitializer {
 
                             add2PrivateOrChange(players, level, BoolArgumentType.getBool(context, "startLogging"));
 
-                            context.getSource().sendFeedback(() -> Text.translatable("log2me.logging.level.set_private_level", players.size(), TextUtils.getStyledLogLevel(level), TextUtils.getStringNames(players)), true);
+                            context.getSource().sendFeedback(() -> Text.translatable(
+                                    "log2me.logging.level.set_private_level",
+                                    players.size(),
+                                    TextUtils.getStyledLogLevel(level),
+                                    TextUtils.getStringNames(players)),
+                                    true
+                            );
 
                             return 1;
                         })))))
@@ -104,18 +142,38 @@ public class LoggingCommand implements ModInitializer {
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
                 dispatcher.register(literal("loggingList").executes(context -> {
                     ServerCommandSource source = context.getSource();
-                    source.sendFeedback(() -> Text.translatable("log2me.logging.players.global", TextUtils.getStyledLogLevel(globalLogLevel), TextUtils.getStringNames(ChatAppender.GETTING_GLOBAL_LOG_PLAYERS)), false);
+
+                    source.sendFeedback(() -> Text.translatable(
+                            "log2me.logging.players.global",
+                            TextUtils.getStyledLogLevel(globalLogLevel),
+                            TextUtils.getStringNames(ChatAppender.GETTING_GLOBAL_LOG_PLAYERS)),
+                            false
+                    );
+
                     source.sendFeedback(Text::empty, false);
-                    source.sendFeedback(() -> Text.translatable("log2me.logging.players.private"), false);
-                    source.sendFeedback(() -> Text.translatable("log2me.logging.players.private.getting", TextUtils.getStyledLogLevelByMap(PRIVATE_LOG_LEVEL_PLAYERS, true)), false);
-                    source.sendFeedback(() -> Text.translatable("log2me.logging.players.private.not_getting", TextUtils.getStyledLogLevelByMap(PRIVATE_LOG_LEVEL_PLAYERS, false)), false);
+
+                    source.sendFeedback(() -> Text.translatable(
+                            "log2me.logging.players.private"),
+                            false
+                    );
+                    source.sendFeedback(() -> Text.translatable(
+                            "log2me.logging.players.private.getting",
+                            TextUtils.getStyledLogLevelByMap(PRIVATE_LOG_LEVEL_PLAYERS, true)),
+                            false
+                    );
+                    source.sendFeedback(() -> Text.translatable(
+                            "log2me.logging.players.private.not_getting",
+                            TextUtils.getStyledLogLevelByMap(PRIVATE_LOG_LEVEL_PLAYERS, false)),
+                            false
+                    );
+
                     return 1;
                 }))
         );
     }
 
-    private ArrayList<String> startLog2Players(Collection<ServerPlayerEntity> players) {
-        ArrayList<String> list = new ArrayList<>();
+    private List<String> startLog2Players(Collection<ServerPlayerEntity> players) {
+        List<String> list = new ArrayList<>();
 
         if (PRIVATE_LOG_LEVEL_PLAYERS.keySet().containsAll(players))
             PRIVATE_LOG_LEVEL_PLAYERS.forEach((player, pair) -> {
@@ -136,8 +194,8 @@ public class LoggingCommand implements ModInitializer {
         return list;
     }
 
-    private ArrayList<String> stopLog2Players(Collection<ServerPlayerEntity> players) {
-        ArrayList<String> list = new ArrayList<>();
+    private List<String> stopLog2Players(Collection<ServerPlayerEntity> players) {
+        List<String> list = new ArrayList<>();
 
         if (PRIVATE_LOG_LEVEL_PLAYERS.keySet().containsAll(players))
             PRIVATE_LOG_LEVEL_PLAYERS.forEach((player, pair) -> {
@@ -187,8 +245,8 @@ public class LoggingCommand implements ModInitializer {
         });
     }
 
-    private ArrayList<String> removeFromPrivate(Collection<ServerPlayerEntity> players) {
-        ArrayList<String> list = new ArrayList<>();
+    private List<String> removeFromPrivate(Collection<ServerPlayerEntity> players) {
+        List<String> list = new ArrayList<>();
 
         PRIVATE_LOG_LEVEL_PLAYERS.forEach((player, pair) -> {
             if (players.contains(player)) {
