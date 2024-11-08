@@ -39,7 +39,23 @@ public enum LogLevelColors {
     private static final Map<String, Integer> LOG_LEVEL_COLOR_MAP;
 
     public static int getConfigLogLevelColor(Level level) {
-        return LOG_LEVEL_COLOR_MAP.get(level.toString());
+        return LOG_LEVEL_COLOR_MAP.getOrDefault(level.toString(), getDefaultLogLevelColor(level));
+    }
+
+    public static int getDefaultLogLevelColor(Level level) {
+        return switch (level.name()) {
+            case "OFF"   -> OFF.color;
+            case "FATAL" -> FATAL.color;
+            case "ERROR" -> ERROR.color;
+            case "WARN"  -> WARN.color;
+            case "INFO"  -> INFO.color;
+            case "DEBUG" -> DEBUG.color;
+            case "TRACE" -> TRACE.color;
+            case "ALL"   -> ALL.color;
+
+            default -> throw new IllegalArgumentException("Unknown log level!");
+        };
+
     }
 
     static {
